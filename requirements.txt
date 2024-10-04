@@ -7,3 +7,6 @@ flasgger==0.9.5
 requests==2.31.0
 gunicorn==20.1.0
 unittest2==1.1.0
+psycopg2==2.9.9
+flask-sqlalchemy==3.1.1
+sqlalchemy==2.0.35
