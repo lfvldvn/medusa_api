@@ -1,0 +1,270 @@
+openapi: 3.0.0
+info:
+  title: Medusa API
+  version: 1.0.0
+  description: API RESTful para gerenciar clientes, pedidos, produtos e inscrições em newsletter.
+servers:
+  - url: http://127.0.0.1:5000
+paths:
+  /add_customer:
+    post:
+      summary: Adiciona um novo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+      responses:
+        '201':
+          description: Cliente adicionado com sucesso
+        '400':
+          description: Dados de entrada inválidos
+
+  /customers:
+    get:
+      summary: Retorna a lista de clientes
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    phone:
+                      type: string
+
+  /update_customer/{id}:
+    put:
+      summary: Atualiza um cliente existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do cliente a ser atualizado
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+        '404':
+          description: Cliente não encontrado
+        '400':
+          description: Dados de entrada inválidos
+
+  /delete_customer/{id}:
+    delete:
+      summary: Deleta um cliente existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do cliente a ser deletado
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cliente deletado com sucesso
+        '404':
+          description: Cliente não encontrado
+
+  /add_order:
+    post:
+      summary: Adiciona um novo pedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        '201':
+          description: Pedido adicionado com sucesso
+        '400':
+          description: Dados de entrada inválidos
+
+  /orders:
+    get:
+      summary: Retorna a lista de pedidos
+      responses:
+        '200':
+          description: Lista de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    customer_id:
+                      type: integer
+                    product_id:
+                      type: integer
+                    quantity:
+                      type: integer
+
+  /update_order/{id}:
+    put:
+      summary: Atualiza um pedido existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido a ser atualizado
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        '200':
+          description: Pedido atualizado com sucesso
+        '404':
+          description: Pedido não encontrado
+        '400':
+          description: Dados de entrada inválidos
+
+  /delete_order/{id}:
+    delete:
+      summary: Deleta um pedido existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do pedido a ser deletado
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Pedido deletado com sucesso
+        '404':
+          description: Pedido não encontrado
+
+  /add_product:
+    post:
+      summary: Adiciona um novo produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                  format: float
+      responses:
+        '201':
+          description: Produto adicionado com sucesso
+        '400':
+          description: Dados de entrada inválidos
+
+  /products:
+    get:
+      summary: Retorna a lista de produtos
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    price:
+                      type: number
+                      format: float
+
+  /subscribe_newsletter:
+    post:
+      summary: Inscreve um usuário na newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '201':
+          description: Inscrição realizada com sucesso
+        '400':
+          description: Dados de entrada inválidos
+
+  /newsletter_subscribers:
+    get:
+      summary: Retorna a lista de inscritos na newsletter
+      responses:
+        '200':
+          description: Lista de inscritos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    email:
+                      type: string
